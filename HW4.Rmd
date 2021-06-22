@@ -1,0 +1,192 @@
+---
+title: "236523 - Introduction to Bioinformatics - Spring 21 - HW4"
+author: "Alon Hacohen | 311587653 & Roy Bernea | 316315829"
+date: "30/06/2021"
+output:
+  word_document: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Question 1
+
+Following are answers for the questions under the "Question 1" Section - as instructed in the assignment:
+
+
+
+Combine 4 datasets from TCGA studies on cBioPortal: 
+Breast Invasive Carcinoma 
+Cervical Squamous Cell Carcinoma
+Ovarian Serous Cystadenocarcinoma
+Uterine Corpus Endometrial Carcinoma
+Choose the appropriate source for the datasets, regarding the fact that you combine them to perform further comparison analysis. 
+
+
+### Q1.1
+Compare the 4 cancers by patients’ race. Deselect the samples with “NA” race. Go to clinical data and choose `cancer type` among attributes. Can you claim that Native Hawaiian or Other Pacific Islander race group is not predisposed to specific types of cancer analyzed here? Explain the result that you see for this this race group. 
+Add the 100% stacked barplot generated at this analysis to your answer. The plots can be easily downloaded from the page, find a way to do it. 
+
+
+
+
+### Q1.2
+
+Compare between overall survival statuses of the patients in the 4 cancers by tumor type. Which tumor type has the lowest median of overall survival time ? 
+
+
+### Q1.3
+
+Which gene is the gene with the highest frequency of copy number alterations in this combined study? What is its functional role in the cell? 
+
+#ANSWER
+
+
+
+### Q1.4
+
+Query the combined studies for the gene from 1.3. Perform a comparison/survival analysis for the gene versus unaltered group. 
+Relying on these results what can you say regarding progression free survival in the three cancers of patients with the altered gene versus unaltered group? Attach the progression-free survival plot here. 
+
+
+#ANSWER
+
+
+
+
+### Q1.5
+
+Browse each of the cancers separately and attach its progression free plot of altered gene vs unaltered group here. Relying on the results that you got, what can you say regarding the meaning of the plot you’ve got at 1.4 ? 
+
+#ANSWER
+
+
+
+
+### Q1.6
+
+What is the most abundant genetic alteration in this gene for all the three cancers analyzed? Attach a plot that shows it.
+
+#ANSWER
+
+
+### Q1.x
+
+#### Q1.x.x
+The impact factor of each journal:
+
+```{r,echo=TRUE,eval=TRUE, warning=FALSE, message=FALSE}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Qusetion 2
+
+Following are answers for the questions under the "Question 2" Section - as instructed in the assignment:
+
+### Q2.1
+The name of the paper these results were taken from is: 
+
+*"Meta-analysis of genome-wide association studies of anxiety disorders"*. 
+ 
+The paper was published by T. Otowa and K. Hek (and 45 others) on January 12th, 2016. 
+ 
+
+### Q2.2
+
+Following is the code to create the Manhattan plot from the data (using the appropriate function from the `fastman` package):
+
+```{r,echo=TRUE,eval=TRUE, warning=FALSE, message=FALSE}
+
+library("data.table")
+library("fastman")
+library("statgenGWAS")
+
+# Preparing the data
+data <- fread(".\\anxiety.meta.full.cc.tbl")
+
+# Creating the Manhattan plot
+fastman(data, chr = "CHR", ps = "BP", p = "P.value", main = "Manhattan plot", suggest_line = FALSE, gws_line = -log10(5e-08), color = c("grey", "black"), chr_build = "GRCh37", yscale = NA, xlab_all = TRUE, turbo = TRUE)
+
+```
+
+#### Q2.2.1
+ 
+According to the Manhattan plot, the most significant SNPs are located in chromosome number 3.
+
+#### Q2.2.3
+ 
+We **can**, in fact, assume that the significant SNPs are in LD.
+As can be observed in the Manhattan plot, the dots which are above the line are placed very close to one another, and therefore have similar p-values, which mean they are in LD.
+
+
+#### Q2.2.3
+ 
+One of the most significant SNPs is **rs1709393**, which has the lowest p-value, 1.651x10^-8^ (this can be found with exploration over the data). 
+Using the dbSNP site, we find that the name of the gene is **LINC02085**. This gene is non-protein coding.
+
+
+### Q2.3
+ 
+Following is the code to create the qqplot (using the appropriate function from the `fastman` package):
+
+```{r,echo=TRUE,eval=TRUE, warning=FALSE, message=FALSE}
+
+fastqq(data, p = "P.value", lambda = T, main = "Q-Q plot")
+
+```
+ 
+Looking at the qqplot, we notice that for a large number of values - the expected values match their respective observed values. The majority of the values seems to matche in such way, with an exception of a batch of values (with high -log10(p-value)). In this batch of values, we get values that have a low enough p-value to indicate that there is evidence against the null hypothesis.
+Therefore, based on the qqplot, we get the desired results - and may continue with this analysis.
+
+
+### Q2.4
+ 
+The exported PDFs containing the qqplot and the Manhattan plot (in size of 10x10) were also added to the HW submission.
