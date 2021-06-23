@@ -1,0 +1,50 @@
+---
+title: "Untitled"
+author: "me!"
+date: "6/18/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 2
+### Q2.1
+let-7g is family of miRNAs.
+miRNAs are non-coding RNAs that are involved in post-transcriptional regulation of gene expression in organisms. They affect both the stability and translation of mRNAs.
+dysregulation of let-7g is known to be a factor of several types of cancer, such as lung and breast cancer.
+### Q2.2.1
+The gene WDR82 overlaps let-7g.
+
+### Q2.2.3
+It is clrealy visible that the let-7g section is conserved very accuraetly through most species we checked, but the areas surrounding the let-7g are only conserved in apes.
+
+### Q2.3.1
+TP53 & AGO2 tend to co-occur.
+AGO2 & MIR-34A tend to be mutually exclusive.
+TP53 & MIR-34A tend to co-occur.
+
+### Q2.3.2
+The study we found is "The Role of TP53 in miRNA Loading Onto AGO2 and in Remodelling the miRNA–mRNA Interaction Network".
+a cite from the study concerning TP53 & AGO2 tendency to co-occur:
+"TP53 directly associated with AGO2, and induced and reduced loading of a subset of miRNAs, including the lethal 7 (let-7) miRNA family members, onto AGO2 in response to DNA damage."
+
+### Q2.3.3
+In the study "TP53 regulates miRNA association with AGO2 to remodel the miRNA–mRNA interaction network" the writers discuss the connection between the pair and the let-7 family:
+"This revealed a significant TP53-dependent regulatory effect on the association between AGO2 and the entire let-7 family apart from let-7d (Fig. 2A), and we validated these findings by RT-qPCR (Fig. 2B,C)."
+
+
+
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
