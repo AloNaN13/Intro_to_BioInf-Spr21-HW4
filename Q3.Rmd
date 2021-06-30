@@ -8,6 +8,7 @@ editor_options:
 ```{r}
 library(survival)
 library(survminer)
+library(dplyr)
 ```
 
 # Analyzing TCGA data using the RTCGA package
@@ -16,9 +17,9 @@ The RTCGA package (bioconductor.org/packages/RTCGA) and all the associated data 
 
 ```{r}
 
-BiocManager::install("RTCGA")
-BiocManager::install("RTCGA.clinical") # if asked, do not install from source.
-BiocManager::install("RTCGA.mRNA") # if asked, do not install from source.
+#BiocManager::install("RTCGA")
+#BiocManager::install("RTCGA.clinical") # if asked, do not install from #source.
+#BiocManager::install("RTCGA.mRNA") # if asked, do not install from source.
 
 library("RTCGA.mRNA")
 
@@ -192,10 +193,34 @@ Hint 1: Use a loop to go over all genes, and in each iteration use the coxph fun
 Hint 2: To extract the p-value use the `summary` function on the output of the coxph analysis.
 The p-values are within the `coefficient` filed in of `summary`.
 ```{r}
-for ( gene in m){
-  
+min_g <- 'some_str'
+min_p <- 100
+all_genes <-names(m)[6:(length(colnames(m))-1)]
+for(gene in all_genes){
+  print(gene)
+  coxph_res<-coxph(Surv(times, patient.vital_status)~get(gene), data=m)
+  curr_p <- summary(coxph_res)$coefficient[,5]
+  if(curr_p < min_p){
+    min_p<-curr_p
+    min_g <-gene
+  }
   
 }
+print(min_g)
+
+
 ```
 
 Plot the KM-plot by stratifying the patients by the median expression of the gene you found.
+
+```{r}
+#The gene which has the lowest p-value is HERC3 as we found out
+g_median_val <- median(m$HERC3)
+b_median <- filter(m,HERC3>=g_median_val)
+s_median <- filter(m,HERC3<g_median_val)
+s_median$median_status<-'smaller'
+b_median$median_status<-'bigger or eq'
+surv_m<-rbind(s_median, b_median)
+ggsurvplot(surv_fit(Surv(times, patient.vital_status)~median_status,
+                    data=surv_m))
+```
