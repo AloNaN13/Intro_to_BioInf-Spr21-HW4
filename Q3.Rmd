@@ -155,8 +155,13 @@ xtabs(~admin.disease_code+patient.gender, data=clinkid)
 3. Run a Cox PH regression on the cancer type and gender. What’s the effect of gender? Is it significant? How does survival differ by each type? Which has the worst prognosis?
 ```{r, eval=FALSE}
 cox_diseases<-coxph(Surv(times, patient.vital_status)~admin.disease_code, data=clinkid)
+cox_diseases
 coxph(Surv(times, patient.vital_status)~patient.gender, data=clinkid)
 ```
+- Concerning gender, we can see male has a better prognosis than females. the coef is negative but the value is rather small, so the improvement is not significant.
+- According to the Cox PH test, the survival rate for kirp is worse than kich, and the survival rate for kirc is the worst. Therefore we can conclude that kirc (with the patient being female) has the worst prognosis.
+
+
 4. Create survival curves for each different subtype.
 + Produce a Kaplan-Meier plot.
 + Show survival tables each year for the first 5 years.
